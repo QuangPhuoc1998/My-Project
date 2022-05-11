@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.2
 
 Window {
     width: 600
@@ -31,7 +32,31 @@ Window {
             {
                 btn_connect_background.color = btn_connect.down ? "#980F0D" : "#DD0F0D"
             }
+        }
+        onTxt_UpdateMonitor:
+        {
+            txt_Monitor.append(NewData)
+        }
+    }
+    FileDialog
+    {
+        id: openFileDialog
+        title: "Choose Bin file"
+        selectMultiple: false
+        selectFolder: false
+        nameFilters: ["All files (*)"]
+        onAccepted:
+        {
+            var path = openFileDialog.fileUrl.toString()
+            path = path.replace(/^(file:\/{3})|(qrc:\/{2})|(http:\/{2})/,"")
+            var cleanPath = decodeURIComponent(path);
 
+            txt_Monitor.append("Open file:")
+            Op_InterruptManager.btn_OpenFileOnClick(cleanPath);
+
+        }
+        onRejected:
+        {
 
         }
     }
@@ -61,7 +86,6 @@ Window {
                     onClicked:
                     {
                         Op_InterruptManager.btn_ConnectOnClick()
-                        txt_Monitor.append("HIHI")
                     }
 
                     contentItem: Text
@@ -207,7 +231,7 @@ Window {
                 id: row1
                 x: 0
                 y: 0
-                width: 350
+                width: 572
                 height: 47
                 bottomPadding: 8
                 leftPadding: 10
@@ -216,12 +240,12 @@ Window {
                     id: btn_Openfile
                     x: 10
                     y: 10
-                    width: 120
+                    width: 560
                     height: 30
                     flat: true
                     onClicked:
                     {
-                        Op_InterruptManager.btn_OpenFileOnClick();
+                        openFileDialog.open()
                     }
 
                     background: Rectangle {
@@ -243,24 +267,6 @@ Window {
                         verticalAlignment: Text.AlignVCenter
                         font.pointSize: 10
                     }
-                }
-
-                TextArea {
-                    id: txt_ChooseFile
-                    y: 10
-                    width: 440
-                    height: 30
-                    enabled: false
-                    text: qsTr("Nop")
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.pointSize: 10
-                    placeholderText: qsTr("Text Area")
-                    background: Rectangle
-                    {
-                        color: "#FFFFFF"
-                    }
-
                 }
             }
 
@@ -285,6 +291,11 @@ Window {
                     width: 560
                     height: 30
                     flat: true
+                    onClicked:
+                    {
+                        Op_InterruptManager.btn_FlashOnClick();
+                    }
+
                     background: Rectangle {
                         opacity: enabled ? 1 : 0.3
                         color: btn_Flash.down ? "#10D87E" : "#10937E"
@@ -417,13 +428,11 @@ Window {
                 enabled: true
                 color: "#000000"
                 textFormat: Text.AutoText
-                font.pointSize: 15
+                font.pointSize: 12
                 placeholderText: qsTr("Monitor display")
                 wrapMode: TextArea.WrapAnywhere
                 placeholderTextColor: "#000000"
             }
-
-
         }
     }
 }
