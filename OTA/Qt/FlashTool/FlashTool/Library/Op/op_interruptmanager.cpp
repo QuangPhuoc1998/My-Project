@@ -253,10 +253,6 @@ void Op_InterruptManager::ser_DataReceive()
                     g_ubRxRealLen = g_ubRxIndexCount+1;
                     Ex_CopyArray(g_aubRxData, g_aubRxRealData, g_ubRxRealLen);
 
-                    for(uint8_t i = 0 ; i < g_ubRxRealLen ; i++)
-                    {
-                        qDebug() << "Hex num: " <<Qt::hex << g_aubRxRealData[i];
-                    }
                     PCUBE_RECEIVE_DONE_FLAG = C_ON;
                     //
                 }
@@ -291,9 +287,8 @@ void Op_InterruptManager::Timer100msEvent()
 
 void Op_InterruptManager::Timer1000msEvent()
 {
-    static uint8_t ubProgramWatchDogCnt = 0;
     static uint8_t ubConnectWatchDogCnt = 0;
-    if(APP_PROGRAM_REQUEST == C_ON)
+    if(APP_PROGRAM_REQUEST == C_ON )
     {
         ubProgramWatchDogCnt++;
         if(ubProgramWatchDogCnt >= TIME_5S_BY_1S)
@@ -305,6 +300,12 @@ void Op_InterruptManager::Timer1000msEvent()
     {
         ubProgramWatchDogCnt = 0;
     }
+
+    if(APP_PROGRAM_DONE == C_ON)
+    {
+        ubProgramWatchDogCnt = 0;
+    }
+
 
     if(SERIALPORT_CHECK_CONNECT == C_ON)
     {

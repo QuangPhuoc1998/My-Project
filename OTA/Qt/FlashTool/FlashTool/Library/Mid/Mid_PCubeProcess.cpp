@@ -94,6 +94,7 @@ void Mid_PCubeProcess::_PCubeProcessWriteResponse()
                 if(g_aubRxRealData[i+2] == PCUBE_ACK)
                 {
                     APP_PROGRAM_DONE = C_ON;
+                    ubProgramWatchDogCnt = 0;
                 }
                 break;
             case PCUBE_ATTR_AP_RUN:
@@ -158,12 +159,12 @@ void Mid_PCubeProcess::_PCubeEraseData()
 
 void Mid_PCubeProcess::_PCubeFlashData()
 {
-    static uint8_t index = 0;
+    static uint32_t index = 0;
     static uint32_t bytes_remaining=0;
     static uint32_t t_len_of_file=0;
     static uint32_t bytes_so_far_sent = 0,len_to_read=0;
     static uint32_t base_mem_address = ADDRESS_SECTOR_1;
-    static uint8_t probar = 0;
+    static uint32_t probar = 0;
 
     if(APP_PROGRAM_FIRST_INIT == C_ON)
     {
@@ -216,10 +217,8 @@ void Mid_PCubeProcess::_PCubeFlashData()
 
          emit _PCubeSendData();
          index++;
-         if((index * 100 / probar) % 10 == 0)
-         {
-             emit qml_UpdateMonitor(QString::number(index * 100 / probar)+ "%");
-         }
+         emit qml_UpdateMonitor(QString::number((float)index*100/probar)+ "%");
+
 
          /*---*/
          base_mem_address+=len_to_read;

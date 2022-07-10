@@ -24,7 +24,7 @@
 "bootloader_v1\stm32f7xx_hal_i2c_ex.o"
 "bootloader_v1\stm32f7xx_hal_exti.o"
 "bootloader_v1\system_stm32f7xx.o"
-"bootloader_v1\sys_timer_1.o"
+"bootloader_v1\sys_timer.o"
 "bootloader_v1\op_headerfunction.o"
 "bootloader_v1\stm32f769i_discovery.o"
 "bootloader_v1\app_bootloader.o"

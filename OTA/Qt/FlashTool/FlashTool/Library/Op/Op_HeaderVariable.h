@@ -26,4 +26,5 @@ HEAER_VARIABLE FlashWriteControl_t sDataToWrite;
 HEAER_VARIABLE FlashEraseControl_t sDataToErase;
 /*--- Variable for Operation ---*/
 HEAER_VARIABLE uint8_t g_ubResetCnt;
+HEAER_VARIABLE uint8_t ubProgramWatchDogCnt;
 #endif // _OP_HEADER_VARIABLE_H_

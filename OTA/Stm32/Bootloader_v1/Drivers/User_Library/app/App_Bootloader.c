@@ -15,6 +15,12 @@ void App_BootloaderJumpToUserApp(void)
 {
 	
 	HAL_UART_DeInit(&huart1);
+	HAL_RCC_DeInit();
+	HAL_DeInit();
+	
+	SCB->SHCSR &= ~(SCB_SHCSR_USGFAULTENA_Msk |\
+	SCB_SHCSR_BUSFAULTENA_Msk |\
+	SCB_SHCSR_MEMFAULTACT_Msk);
 	
 	void (*app_reset_handler)(void);
 	

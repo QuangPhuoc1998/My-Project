@@ -72,6 +72,7 @@ typedef enum
 #define PCUBE_CLU_WIFI_DONGLE 		(0x03)
 #define PCUBE_CLU_DEVICE 					(0x04)
 
+#define TIME_20S_BY_1S (20)
 #define TIME_5S_BY_1S (5)
 
 #endif // _OP_HEADER_DEFINE_H_
